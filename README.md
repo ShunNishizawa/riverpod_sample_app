@@ -31,6 +31,9 @@
     - 時間の経過とともに変化する可能性のある状態を後悔する
     - 長期的な保守性を向上させるために、状態を操作する非同期ビジネスロジックを１箇所に集中させる
 
+AsyncNotifireProvider
+- `Future`(非同期)な`State`(状態)とそれを操作するAsyncNotifireを提供する
+
 ### FutureProvider
 
 - 非同期で取得した値を提供する
@@ -43,3 +46,31 @@
 ### ChangeNotifierProvider
 
 - 変更可能な状態を持つクラスを提供する
+
+### Consumer Widget
+
+- flutter_riverpodで利用する方ではない
+- `StatelessWidget`など、buildメソッドに`WidgetRef`を持たないWidgetでも局所的に`WidgetRef`を利用することできるようになるWidget
+
+### Widgetの再構築が不要な場面では・・・
+
+- プロバイダの値を取得して、画面に反映・更新させたい場合は`ref.watch`を使用する
+- 再構築不要な場合は`ref.read`を利用する
+  - 不要な再構築を避ける
+
+- Widgetのbuildメソッド内では利用しない。あくまで、ボタンが押された時の動作など、再構築とは関係のない箇所でのみ利用する
+
+### ref.listen
+- プロバイダーの状態が変更されたとき、その変更を検知して画面遷移やダイアログ表示をさせたい時に利用する
+
+### ref.refresh/invalidate
+
+- `FutureProvider`を利用した際、WebAPIから値を１度取得した後に、もう一度非同期処理を実行して、最新の値を取得したい時に利用する
+
+- `invalid`:プロバイダーを直ちに無効化（破棄）する
+- `refresh`:プロバイダーを直ちに再評価（破棄）し、取得した値を返す
+
+### autoDispose修飾子
+
+- そのProviderへの参照がなくなった時、自動でそのProviderが破棄されるようになる
+- 再度、参照された際は新たなProviderとして構築されるので、以前のProviderの状態は引き継がない
