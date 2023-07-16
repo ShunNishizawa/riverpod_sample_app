@@ -17,6 +17,7 @@
 ### StateProvider
 
 - 外部から変更可能な状態を提供する
+- enumとか数値などシンプルな状態を管理
 
 ### StateNotifierProvider
 
